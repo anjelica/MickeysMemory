@@ -62,7 +62,7 @@ namespace AnjelicaApp
 			sm = new StateMachine();
 
 			// Initialize Controllers
-			titleController = new TitleController (this, this.CubeSet, this.cubePainter, sm);
+			titleController = new TitleController (this.CubeSet, this.cubePainter, sm);
 			/*menuController = new MenuController (this.CubeSet,this.cubePainter,sm);*/
 			gameController = new GameController (this.CubeSet, this.cubePainter, sm);
 
