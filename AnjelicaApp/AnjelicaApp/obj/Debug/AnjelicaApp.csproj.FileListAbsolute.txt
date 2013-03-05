@@ -1,0 +1,6 @@
+C:\Users\aica\Documents\GitHub\MickeysMemory\AnjelicaApp\AnjelicaApp\bin\Debug\Game.exe
+C:\Users\aica\Documents\GitHub\MickeysMemory\AnjelicaApp\AnjelicaApp\bin\Debug\Game.pdb
+C:\Users\aica\Documents\GitHub\MickeysMemory\AnjelicaApp\AnjelicaApp\bin\Debug\JsonFx.dll
+C:\Users\aica\Documents\GitHub\MickeysMemory\AnjelicaApp\AnjelicaApp\obj\Debug\AnjelicaApp.csprojResolveAssemblyReference.cache
+C:\Users\aica\Documents\GitHub\MickeysMemory\AnjelicaApp\AnjelicaApp\obj\Debug\Game.exe
+C:\Users\aica\Documents\GitHub\MickeysMemory\AnjelicaApp\AnjelicaApp\obj\Debug\Game.pdb
