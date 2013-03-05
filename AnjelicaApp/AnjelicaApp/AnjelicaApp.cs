@@ -72,6 +72,7 @@ namespace AnjelicaApp
 
 			sm.Transition("null", "nullToTitle", "title");
 			sm.Transition("title", "titleToGame", "game");
+            sm.Transition("game", "gameToTitle", "title");
 
 			sm.SetState("title", "nullToTitle");
 		}

@@ -1,5 +1,5 @@
 ﻿/* StateMachineLock.cs()
- * Written by Sean Voisen and used for Mac's Fiesta
+ * Written by Sean Voisen and used for Mickey's Memory
  */
 
 using System;
