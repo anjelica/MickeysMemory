@@ -78,5 +78,29 @@ namespace AnjelicaApp
 		{
 			cube.Paint ();
 		}
+
+        public void PaintAction(Cube cube, String action)
+        { 
+            if (action.Equals("shake"))
+            {
+                // purple
+                ClearScreen(cube, new Color(127, 0, 255));
+            }
+            else if (action.Equals("tilt"))
+            {
+                // pink
+                ClearScreen(cube, new Color(255, 0, 255));
+            }
+            else if (action.Equals("flip"))
+            {
+                // light blue
+                ClearScreen(cube, new Color(0, 127, 255));
+            }
+            else if (action.Equals("click"))
+            {
+                // yellow
+                ClearScreen(cube, new Color(255, 255, 0));
+            }
+        }
 	}
 }
