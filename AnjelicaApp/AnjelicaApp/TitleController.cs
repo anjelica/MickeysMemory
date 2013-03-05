@@ -12,7 +12,7 @@ namespace AnjelicaApp
 		private CubePainter cubePainter;
 		private StateMachine sm;
         private StateMachineLock smLock;
-        private bool found = false;
+        private bool found;
 
 		public TitleController (CubeSet cubeSet, CubePainter cubePainter, StateMachine sm)
 		{
@@ -25,6 +25,7 @@ namespace AnjelicaApp
 		public void OnSetup(string transition)
 		{
 			Log.Debug("In TitleController");
+            found = false;
             Paint();
             ListenForEvents();
         }

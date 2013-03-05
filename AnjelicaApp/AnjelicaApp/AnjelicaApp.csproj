@@ -47,10 +47,8 @@
     <Compile Include="StateMachineLock.cs" />
     <Compile Include="TitleController.cs" />
     <Compile Include="GameController.cs" />
-    <Compile Include="CubeWrapper.cs" />
     <Compile Include="CubePainter.cs" />
     <Compile Include="Sprites.cs" />
-    <Compile Include="TitleCubeWrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

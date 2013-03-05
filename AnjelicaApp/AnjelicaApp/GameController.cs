@@ -86,6 +86,7 @@ namespace AnjelicaApp
                 else {
                     Log.Debug("Incorrect :(");
                     sm.QueueTransition("gameToTitle");
+                    sm.Tick(1);
                 }
             }
         }
