@@ -15,7 +15,7 @@ namespace AnjelicaApp
         private Cube actionCube;
         private Random random = new Random();
         private int score, actionIndex;
-        private String[] actions = new String[] {"shake", "tilt", "flip", "click"};
+        private String[] actions = new String[] {"shake", "flip", "click"};
 
 		public GameController (CubeSet cubeSet, CubePainter cubePainter, StateMachine sm)
 		{
@@ -30,16 +30,9 @@ namespace AnjelicaApp
             Log.Debug("GameController Setup");
             score = 0;
             actionCube = cubeSet[random.Next(cubeSet.Count)];
-            actionIndex = random.Next(4);
+            actionIndex = random.Next(3);
             Paint();
-            foreach (Cube cube in cubeSet)
-            {
-                cube.ButtonEvent += OnButton;
-                cube.TiltEvent += OnTilt;
-                cube.ShakeStartedEvent += OnShakeStarted;
-                cube.ShakeStoppedEvent += OnShakeStopped;
-                cube.FlipEvent += OnFlip;
-            }
+            listenForEvents();
 
 		}
 
@@ -85,16 +78,12 @@ namespace AnjelicaApp
             {
                 Log.Debug("Button released");
 
-                if (actionIndex == 3)
+                if (actionIndex == 2)
                 {
                     if (cube.Equals(actionCube))
                     {
                         Log.Debug("Correct!");
-                        score++;
-                        Log.Debug("Score: {0}", score);
-                        actionCube = cubeSet[random.Next(cubeSet.Count)];
-                        actionIndex = random.Next(4);
-                        Paint();
+                        nextAction(cube);
                     }
                     else
                     {
@@ -112,33 +101,6 @@ namespace AnjelicaApp
             }
         }
 
-        private void OnTilt(Cube cube, int tiltX, int tiltY, int tiltZ)
-        {
-            Log.Debug("Tilt: {0} {1} {2}", tiltX, tiltY, tiltZ);
-            if (actionIndex == 1)
-            {
-                if (cube.Equals(actionCube))
-                {
-                    Log.Debug("Correct!");
-                    score++;
-                    Log.Debug("Score: {0}", score);
-                    actionCube = cubeSet[random.Next(cubeSet.Count)];
-                    actionIndex = random.Next(4);
-                    Paint();
-                }
-                else
-                {
-                    Log.Debug("Wrong cube!");
-                    sm.QueueTransition("gameToTitle");
-                    sm.Tick(1);
-                }
-            }
-            else
-            {
-                Log.Debug("wrong action or tilt error");
-            }
-        }
-
         private void OnShakeStarted(Cube cube)
         {
             Log.Debug("Shake start");
@@ -147,11 +109,7 @@ namespace AnjelicaApp
                 if (cube.Equals(actionCube))
                 {
                     Log.Debug("Correct!");
-                    score++;
-                    Log.Debug("Score: {0}", score);
-                    actionCube = cubeSet[random.Next(cubeSet.Count)];
-                    actionIndex = random.Next(4);
-                    Paint();
+                    nextAction(cube);
                 }
                 else
                 {
@@ -179,20 +137,18 @@ namespace AnjelicaApp
             if (newOrientationIsUp)
             {
                 Log.Debug("Flip face up");
-                if (actionIndex == 2)
+                if (actionIndex == 1)
                 {
                     if (cube.Equals(actionCube))
                     {
                         Log.Debug("Correct!");
-                        score++;
-                        Log.Debug("Score: {0}", score);
-                        actionCube = cubeSet[random.Next(cubeSet.Count)];
-                        actionIndex = random.Next(4);
-                        Paint();
+                        nextAction(cube);
                     }
                     else
                     {
-                        Log.Debug("Wrong cube or flip error");
+                        Log.Debug("Wrong cube!");
+                        sm.QueueTransition("gameToTitle");
+                        sm.Tick(1);
                     }
                 }
                 else
@@ -209,6 +165,31 @@ namespace AnjelicaApp
             }
         }
 
+        private void nextAction(Cube cube)
+        {
+            foreach (Cube cubey in cubeSet)
+            {
+                cubey.ClearEvents();
+                cubePainter.ClearScreen(cubey, Color.White);
+            }
+            score++;
+            Log.Debug("Score: {0}", score);
+            actionCube = cubeSet[random.Next(cubeSet.Count)];
+            actionIndex = random.Next(3);
+            listenForEvents();
+            Paint();
+        }
+
+        private void listenForEvents()
+        {
+            foreach (Cube cube in cubeSet)
+            {
+                cube.ButtonEvent += OnButton;
+                cube.ShakeStartedEvent += OnShakeStarted;
+                cube.ShakeStoppedEvent += OnShakeStopped;
+                cube.FlipEvent += OnFlip;
+            }
+        }
 	}
 }
 

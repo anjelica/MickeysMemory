@@ -83,11 +83,6 @@ namespace AnjelicaApp
         { 
             if (action.Equals("shake"))
             {
-                // purple
-                ClearScreen(cube, new Color(127, 0, 255));
-            }
-            else if (action.Equals("tilt"))
-            {
                 // pink
                 ClearScreen(cube, new Color(255, 0, 255));
             }
