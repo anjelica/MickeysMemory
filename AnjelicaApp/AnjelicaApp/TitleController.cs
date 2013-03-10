@@ -13,13 +13,15 @@ namespace AnjelicaApp
 		private StateMachine sm;
         private StateMachineLock smLock;
         private bool found;
+        private List<Actions> acts;
 
-		public TitleController (CubeSet cubeSet, CubePainter cubePainter, StateMachine sm)
+        public TitleController(CubeSet cubeSet, CubePainter cubePainter, StateMachine sm, List<Actions> acts)
 		{
 			this.cubeSet = cubeSet;
 			this.cubePainter = cubePainter;
 			this.sm = sm;
             smLock = new StateMachineLock(sm);
+            this.acts = acts;
 		}
 
 		public void OnSetup(string transition)
@@ -43,7 +45,7 @@ namespace AnjelicaApp
                 if (found)
                 {
                     // Queues transition when cubes are placed in correct order
-                    sm.QueueTransition("titleToGame");
+                    sm.QueueTransition("titleToPattern");
                     sm.Tick(1);
                 }
             }

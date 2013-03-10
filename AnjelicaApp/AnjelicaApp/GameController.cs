@@ -14,35 +14,44 @@ namespace AnjelicaApp
         private StateMachineLock smLock;
         private Cube actionCube;
         private Random random = new Random();
-        private int score, actionIndex;
+        private int eventCount, actionIndex;
         private String[] actions = new String[] {"shake", "flip", "click"};
+        private List<Actions> acts;
 
-		public GameController (CubeSet cubeSet, CubePainter cubePainter, StateMachine sm)
+        public GameController(CubeSet cubeSet, CubePainter cubePainter, StateMachine sm, List<Actions> acts)
 		{
             this.cubeSet = cubeSet;
             this.cubePainter = cubePainter;
             this.sm = sm;
             smLock = new StateMachineLock(this.sm);
+            this.acts = acts;
 		}
 
 		public void OnSetup(string transition)
 		{
             Log.Debug("GameController Setup");
-            score = 0;
+            eventCount = 0;
             actionCube = cubeSet[random.Next(cubeSet.Count)];
             actionIndex = random.Next(3);
-            Paint();
+            cubePainter.ClearScreen(cubeSet);
+            cubePainter.Commit(cubeSet);
             listenForEvents();
 
 		}
 
 		public void OnTick(float n){
+            if (eventCount == acts.Count)
+            {
+                Log.Debug("next round!");
+                sm.QueueTransition("gameToPattern");
+                sm.Tick(1);
+            }
         }
 
 		public void OnPaint(bool dirtyCanvas){
             if (dirtyCanvas)
             {
-                Paint();
+                //Paint();
             }
         }
 		public void OnDispose(){
@@ -50,19 +59,19 @@ namespace AnjelicaApp
         }
 
         /* private methods */
-        void Paint()
+        void Paint(Cube cubey, string action)
         {
             cubePainter.ClearScreen(cubeSet);
             foreach (Cube cube in cubeSet)
             {
-                if (!cube.Equals(actionCube))
+                if (!cube.Equals(cubey))
                 {
                     cubePainter.ClearScreen(cube, new Color(0, 0, 0));
                 }
                 else
                 {
-                    Log.Debug("{0} me!", actions[actionIndex]);
-                    cubePainter.PaintAction(cube, actions[actionIndex]);
+                    Log.Debug("you did: {0}", action);
+                    cubePainter.PaintAction(cube, action);
                 }
             }
             cubePainter.Commit(cubeSet);
@@ -77,7 +86,7 @@ namespace AnjelicaApp
             else
             {
                 Log.Debug("Button released");
-
+                Paint(cube, "click");
                 if (actionIndex == 2)
                 {
                     if (cube.Equals(actionCube))
@@ -99,17 +108,19 @@ namespace AnjelicaApp
                     sm.Tick(1);
                 }
             }
+            eventCount++;
         }
 
         private void OnShakeStarted(Cube cube)
-        {
+        { 
             Log.Debug("Shake start");
-            if (actionIndex == 0)
+            cubePainter.PaintAction(cube, "shake");
+            if (acts[eventCount].Action.Equals("shake"))
             {
-                if (cube.Equals(actionCube))
+                if (cube.Equals(acts[eventCount].Cube))
                 {
                     Log.Debug("Correct!");
-                    nextAction(cube);
+                    Paint(cube, "shake");
                 }
                 else
                 {
@@ -124,6 +135,7 @@ namespace AnjelicaApp
                 sm.QueueTransition("gameToTitle");
                 sm.Tick(1);
             }
+            eventCount++;
         }
 
         private void OnShakeStopped(Cube cube, int duration)
@@ -137,12 +149,13 @@ namespace AnjelicaApp
             if (newOrientationIsUp)
             {
                 Log.Debug("Flip face up");
-                if (actionIndex == 1)
+                cubePainter.PaintAction(cube, "flip");
+                if (acts[eventCount].Action.Equals("flip"))
                 {
-                    if (cube.Equals(actionCube))
+                    if (cube.Equals(acts[eventCount].Cube))
                     {
                         Log.Debug("Correct!");
-                        nextAction(cube);
+                        Paint(cube, "flip");
                     }
                     else
                     {
@@ -163,6 +176,7 @@ namespace AnjelicaApp
                 Log.Debug("Flip face down");
 
             }
+            eventCount++;
         }
 
         private void nextAction(Cube cube)
@@ -172,12 +186,10 @@ namespace AnjelicaApp
                 cubey.ClearEvents();
                 cubePainter.ClearScreen(cubey, Color.White);
             }
-            score++;
-            Log.Debug("Score: {0}", score);
             actionCube = cubeSet[random.Next(cubeSet.Count)];
             actionIndex = random.Next(3);
             listenForEvents();
-            Paint();
+            //Paint();
         }
 
         private void listenForEvents()

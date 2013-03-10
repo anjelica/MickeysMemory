@@ -41,9 +41,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="AnjelicaApp.cs" />
     <Compile Include="Bootstrap.cs" />
+    <Compile Include="PatternController.cs" />
     <Compile Include="StateMachineLock.cs" />
     <Compile Include="TitleController.cs" />
     <Compile Include="GameController.cs" />

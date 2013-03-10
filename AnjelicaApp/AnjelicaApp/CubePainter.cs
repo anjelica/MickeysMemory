@@ -96,6 +96,7 @@ namespace AnjelicaApp
                 // yellow
                 ClearScreen(cube, new Color(255, 255, 0));
             }
+            
         }
 	}
 }

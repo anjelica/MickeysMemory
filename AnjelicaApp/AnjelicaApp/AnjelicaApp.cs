@@ -9,10 +9,12 @@ namespace AnjelicaApp
   public class AnjelicaApp : BaseApp
   {
 		private TitleController titleController;
+        private PatternController patternController;
 		private GameController gameController;
 		private CubePainter cubePainter;
 		private StateMachine sm;
 		private Boolean canvasDirty;
+        private List<Actions> acts = new List<Actions>();
 
 		public String[] mImageNames;
 		public Random mRandom = new Random();
@@ -30,17 +32,20 @@ namespace AnjelicaApp
 			sm = new StateMachine();
 
 			// Initialize Controllers
-			titleController = new TitleController (this.CubeSet, this.cubePainter, sm);
-			/*menuController = new MenuController (this.CubeSet,this.cubePainter,sm);*/
-			gameController = new GameController (this.CubeSet, this.cubePainter, sm);
+			titleController = new TitleController (this.CubeSet, this.cubePainter, sm, acts);
+            patternController = new PatternController(this.CubeSet, this.cubePainter, sm, acts);
+			gameController = new GameController (this.CubeSet, this.cubePainter, sm, acts);
 
 			// Set states and transitions
 			sm.State("title", titleController);
+            sm.State("pattern", patternController);
 			sm.State("game", gameController);
 
 			sm.Transition("null", "nullToTitle", "title");
-			sm.Transition("title", "titleToGame", "game");
+			sm.Transition("title", "titleToPattern", "pattern");
+            sm.Transition("pattern", "patternToGame", "game");
             sm.Transition("game", "gameToTitle", "title");
+            sm.Transition("game", "gameToPattern", "pattern");
 
 			sm.SetState("title", "nullToTitle");
 		}
