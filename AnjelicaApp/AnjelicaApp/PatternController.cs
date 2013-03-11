@@ -40,10 +40,14 @@ namespace AnjelicaApp
                 acts.Clear();
             }
             acts.Add(new Actions(actions[actionIndex], actionCube));
-            Log.Debug("List length is: {0}", acts.Count());
+            System.Threading.Thread.Sleep(1000);
+            foreach (Cube cube in cubeSet)
+            {
+                cubePainter.ClearScreen(cube, Color.White);
+            }
+            cubePainter.Commit(cubeSet);
+            System.Threading.Thread.Sleep(1000);
             Paint();
-            //listenForEvents();
-
         }
 
         public void OnTick(float n)
@@ -80,6 +84,7 @@ namespace AnjelicaApp
                     }
                 }
                 cubePainter.Commit(cubeSet);
+                /* paint each action for 1 second */
                 System.Threading.Thread.Sleep(1000);
             }
             sm.QueueTransition("patternToGame");

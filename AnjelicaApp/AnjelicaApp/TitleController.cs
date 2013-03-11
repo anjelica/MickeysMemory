@@ -27,6 +27,10 @@ namespace AnjelicaApp
 		public void OnSetup(string transition)
 		{
 			Log.Debug("In TitleController");
+            if (transition == "gameToTitle")
+            { 
+                Log.Debug("YOUR SCORE WAS: {0}", acts.Count-1);
+            }
             found = false;
             Paint();
             ListenForEvents();

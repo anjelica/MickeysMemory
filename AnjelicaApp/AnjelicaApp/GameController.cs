@@ -40,12 +40,8 @@ namespace AnjelicaApp
 		}
 
 		public void OnTick(float n){
-            if (eventCount == acts.Count)
-            {
-                Log.Debug("next round!");
-                sm.QueueTransition("gameToPattern");
-                sm.Tick(1);
-            }
+            if (sm.Current != "game")
+                return;
         }
 
 		public void OnPaint(bool dirtyCanvas){
@@ -87,12 +83,12 @@ namespace AnjelicaApp
             {
                 Log.Debug("Button released");
                 Paint(cube, "click");
-                if (actionIndex == 2)
+                if (acts[eventCount].Action.Equals("click"))
                 {
-                    if (cube.Equals(actionCube))
+                    if (cube.Equals(acts[eventCount].Cube))
                     {
                         Log.Debug("Correct!");
-                        nextAction(cube);
+                        checkEventCount();
                     }
                     else
                     {
@@ -108,19 +104,18 @@ namespace AnjelicaApp
                     sm.Tick(1);
                 }
             }
-            eventCount++;
         }
 
         private void OnShakeStarted(Cube cube)
         { 
             Log.Debug("Shake start");
-            cubePainter.PaintAction(cube, "shake");
+            Paint(cube, "shake");
             if (acts[eventCount].Action.Equals("shake"))
             {
                 if (cube.Equals(acts[eventCount].Cube))
                 {
                     Log.Debug("Correct!");
-                    Paint(cube, "shake");
+                    checkEventCount();
                 }
                 else
                 {
@@ -135,7 +130,6 @@ namespace AnjelicaApp
                 sm.QueueTransition("gameToTitle");
                 sm.Tick(1);
             }
-            eventCount++;
         }
 
         private void OnShakeStopped(Cube cube, int duration)
@@ -149,13 +143,13 @@ namespace AnjelicaApp
             if (newOrientationIsUp)
             {
                 Log.Debug("Flip face up");
-                cubePainter.PaintAction(cube, "flip");
+                Paint(cube, "flip");
                 if (acts[eventCount].Action.Equals("flip"))
                 {
                     if (cube.Equals(acts[eventCount].Cube))
                     {
                         Log.Debug("Correct!");
-                        Paint(cube, "flip");
+                        checkEventCount();
                     }
                     else
                     {
@@ -176,20 +170,6 @@ namespace AnjelicaApp
                 Log.Debug("Flip face down");
 
             }
-            eventCount++;
-        }
-
-        private void nextAction(Cube cube)
-        {
-            foreach (Cube cubey in cubeSet)
-            {
-                cubey.ClearEvents();
-                cubePainter.ClearScreen(cubey, Color.White);
-            }
-            actionCube = cubeSet[random.Next(cubeSet.Count)];
-            actionIndex = random.Next(3);
-            listenForEvents();
-            //Paint();
         }
 
         private void listenForEvents()
@@ -200,6 +180,17 @@ namespace AnjelicaApp
                 cube.ShakeStartedEvent += OnShakeStarted;
                 cube.ShakeStoppedEvent += OnShakeStopped;
                 cube.FlipEvent += OnFlip;
+            }
+        }
+
+        private void checkEventCount()
+        {
+            eventCount++;
+            if (eventCount == acts.Count)
+            {
+                Log.Debug("next round!");
+                sm.QueueTransition("gameToPattern");
+                sm.Tick(1);
             }
         }
 	}
