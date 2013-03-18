@@ -9,9 +9,14 @@ namespace AnjelicaApp
 {
 	public class Sprites
 	{
+        /*
 		public static SpriteData TITLE1 = new SpriteData("title", 0, 0, 128, 128, 0, 0);
 		public static SpriteData TITLE2 = new SpriteData("title", 0, 128, 128, 128, 0, 0);
 		public static SpriteData TITLE3 = new SpriteData("title", 0, 256, 128, 128, 0, 0);
+        */
+        public static SpriteData TITLE1 = new SpriteData("title", 0, 0, 128, 128, 0, 0);
+        public static SpriteData TITLE2 = new SpriteData("title", 128, 0, 128, 128, 0, 0);
+        public static SpriteData TITLE3 = new SpriteData("title", 256, 0, 128, 128, 0, 0);
 
 		// Images
 		public static SpriteData IMAGE1 = new SpriteData("images", 0, 0, 128, 128, 0, 0);

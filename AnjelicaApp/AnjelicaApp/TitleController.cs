@@ -39,6 +39,7 @@ namespace AnjelicaApp
 		public void OnTick(float n){
             if (sm.Current != "title")
                 return;
+            
             // Increments tick counter when state is locked
             if (smLock.Locked)
             {
@@ -113,7 +114,7 @@ namespace AnjelicaApp
             cubePainter.ClearScreen(cubeSet[0], new Color(255, 0, 0));
             cubePainter.ClearScreen(cubeSet[1], new Color(0, 255, 0));
             cubePainter.ClearScreen(cubeSet[2], new Color(0, 0, 255));
-
+           
             cubePainter.Commit(cubeSet);
         }
 	}

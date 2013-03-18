@@ -87,6 +87,13 @@ namespace AnjelicaApp
                 /* paint each action for 1 second */
                 System.Threading.Thread.Sleep(1000);
             }
+
+            foreach (Cube cube in cubeSet)
+            {
+                cubePainter.ClearScreen(cube, Color.White);
+            }
+            cubePainter.Commit(cubeSet);
+            System.Threading.Thread.Sleep(1000);
             sm.QueueTransition("patternToGame");
             sm.Tick(1);
         }
