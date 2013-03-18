@@ -111,10 +111,14 @@ namespace AnjelicaApp
         {
             cubePainter.ClearScreen(cubeSet);
 
-            cubePainter.ClearScreen(cubeSet[0], new Color(255, 0, 0));
+            /*cubePainter.ClearScreen(cubeSet[0], new Color(255, 0, 0));
             cubePainter.ClearScreen(cubeSet[1], new Color(0, 255, 0));
             cubePainter.ClearScreen(cubeSet[2], new Color(0, 0, 255));
-           
+           */
+            cubePainter.PaintFullImage(cubeSet[0], "happy");
+            cubePainter.PaintFullImage(cubeSet[1], "lazy");
+            cubePainter.PaintFullImage(cubeSet[2], "omg");
+
             cubePainter.Commit(cubeSet);
         }
 	}

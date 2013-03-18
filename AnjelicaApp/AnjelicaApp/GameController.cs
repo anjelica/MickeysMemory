@@ -18,6 +18,7 @@ namespace AnjelicaApp
         private String[] actions = new String[] {"shake", "flip", "click"};
         private List<Actions> acts;
         private Sound incorrect;
+        private Sound correct;
         private SoundSet sounds;
 
         public GameController(CubeSet cubeSet, CubePainter cubePainter, StateMachine sm, List<Actions> acts, SoundSet sounds)
@@ -33,7 +34,8 @@ namespace AnjelicaApp
 		public void OnSetup(string transition)
 		{
             Log.Debug("GameController Setup");
-            incorrect = sounds.CreateSound("gliss");
+            correct = sounds.CreateSound("correct");
+            incorrect = sounds.CreateSound("incorrect");
             eventCount = 0;
             actionCube = cubeSet[random.Next(cubeSet.Count)];
             actionIndex = random.Next(3);
@@ -91,6 +93,7 @@ namespace AnjelicaApp
                 {
                     if (cube.Equals(acts[eventCount].Cube))
                     {
+                        correct.Play(1, 0);
                         Log.Debug("Correct!");
                         checkEventCount();
                     }
@@ -120,6 +123,7 @@ namespace AnjelicaApp
             {
                 if (cube.Equals(acts[eventCount].Cube))
                 {
+                    correct.Play(1, 0);
                     Log.Debug("Correct!");
                     checkEventCount();
                 }
@@ -156,6 +160,7 @@ namespace AnjelicaApp
                 {
                     if (cube.Equals(acts[eventCount].Cube))
                     {
+                        correct.Play(1, 0);
                         Log.Debug("Correct!");
                         checkEventCount();
                     }
