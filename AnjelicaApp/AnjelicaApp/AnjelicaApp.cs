@@ -15,6 +15,7 @@ namespace AnjelicaApp
 		private StateMachine sm;
 		private Boolean canvasDirty;
         private List<Actions> acts = new List<Actions>();
+        private Sound bgMusic;
 
 		public String[] mImageNames;
 		public Random mRandom = new Random();
@@ -23,6 +24,11 @@ namespace AnjelicaApp
 		// Here we initialize our app.
 		public override void Setup() {
 			cubePainter = new CubePainter();
+            // Creates background music Sound object
+            bgMusic = Sounds.CreateSound("music");
+
+            // Plays music at max volume and continuous loop
+            bgMusic.Play(1, -1);
 			SetupStateMachine();
 
 		}
@@ -34,7 +40,7 @@ namespace AnjelicaApp
 			// Initialize Controllers
 			titleController = new TitleController (this.CubeSet, this.cubePainter, sm, acts);
             patternController = new PatternController(this.CubeSet, this.cubePainter, sm, acts);
-			gameController = new GameController (this.CubeSet, this.cubePainter, sm, acts);
+			gameController = new GameController (this.CubeSet, this.cubePainter, sm, acts, Sounds);
 
 			// Set states and transitions
 			sm.State("title", titleController);

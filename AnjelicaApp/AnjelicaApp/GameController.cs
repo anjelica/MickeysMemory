@@ -17,19 +17,23 @@ namespace AnjelicaApp
         private int eventCount, actionIndex;
         private String[] actions = new String[] {"shake", "flip", "click"};
         private List<Actions> acts;
+        private Sound incorrect;
+        private SoundSet sounds;
 
-        public GameController(CubeSet cubeSet, CubePainter cubePainter, StateMachine sm, List<Actions> acts)
+        public GameController(CubeSet cubeSet, CubePainter cubePainter, StateMachine sm, List<Actions> acts, SoundSet sounds)
 		{
             this.cubeSet = cubeSet;
             this.cubePainter = cubePainter;
             this.sm = sm;
             smLock = new StateMachineLock(this.sm);
             this.acts = acts;
+            this.sounds = sounds;
 		}
 
 		public void OnSetup(string transition)
 		{
             Log.Debug("GameController Setup");
+            incorrect = sounds.CreateSound("gliss");
             eventCount = 0;
             actionCube = cubeSet[random.Next(cubeSet.Count)];
             actionIndex = random.Next(3);
@@ -93,6 +97,7 @@ namespace AnjelicaApp
                     else
                     {
                         Log.Debug("Wrong cube!");
+                        incorrect.Play(1, 0);
                         sm.QueueTransition("gameToTitle");
                         sm.Tick(1);
                     }
@@ -100,6 +105,7 @@ namespace AnjelicaApp
                 else
                 {
                     Log.Debug("Wrong action!");
+                    incorrect.Play(1, 0);
                     sm.QueueTransition("gameToTitle");
                     sm.Tick(1);
                 }
@@ -120,6 +126,7 @@ namespace AnjelicaApp
                 else
                 {
                     Log.Debug("Wrong cube!");
+                    incorrect.Play(1, 0);
                     sm.QueueTransition("gameToTitle");
                     sm.Tick(1);
                 }
@@ -127,6 +134,7 @@ namespace AnjelicaApp
             else
             {
                 Log.Debug("Wrong action!");
+                incorrect.Play(1, 0);
                 sm.QueueTransition("gameToTitle");
                 sm.Tick(1);
             }
@@ -154,6 +162,7 @@ namespace AnjelicaApp
                     else
                     {
                         Log.Debug("Wrong cube!");
+                        incorrect.Play(1, 0);
                         sm.QueueTransition("gameToTitle");
                         sm.Tick(1);
                     }
@@ -161,6 +170,7 @@ namespace AnjelicaApp
                 else
                 {
                     Log.Debug("Wrong action!");
+                    incorrect.Play(1, 0);
                     sm.QueueTransition("gameToTitle");
                     sm.Tick(1);
                 }
