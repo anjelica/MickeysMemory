@@ -297,5 +297,12 @@ namespace AnjelicaApp
 
         }
 
+        public void printScore(CubeSet cubes, int score)
+        {
+            String name = "score" + score.ToString();
+            Log.Debug("score name was {0}", name);
+            PaintAllImage(cubes, name);
+        }
+
 	}
 }

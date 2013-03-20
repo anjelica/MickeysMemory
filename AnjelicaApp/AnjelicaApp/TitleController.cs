@@ -30,6 +30,9 @@ namespace AnjelicaApp
             if (transition == "gameToTitle")
             { 
                 Log.Debug("YOUR SCORE WAS: {0}", acts.Count-1);
+                cubePainter.printScore(cubeSet, acts.Count - 1);
+                cubePainter.Commit(cubeSet);
+                System.Threading.Thread.Sleep(2000);
             }
             found = false;
             Paint();
