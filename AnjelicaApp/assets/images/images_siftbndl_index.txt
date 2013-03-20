@@ -1,6 +1,8 @@
 click
 flip
+go
 happy
 lazy
 omg
 shake
+watch

@@ -12,9 +12,8 @@ namespace AnjelicaApp
 		private CubePainter cubePainter;
 		private StateMachine sm;
         private StateMachineLock smLock;
-        private Cube actionCube;
         private Random random = new Random();
-        private int eventCount, actionIndex;
+        private int eventCount;
         private String[] actions = new String[] {"shake", "flip", "click"};
         private List<Actions> acts;
         private Sound incorrect;
@@ -37,9 +36,7 @@ namespace AnjelicaApp
             correct = sounds.CreateSound("correct");
             incorrect = sounds.CreateSound("incorrect");
             eventCount = 0;
-            actionCube = cubeSet[random.Next(cubeSet.Count)];
-            actionIndex = random.Next(3);
-            cubePainter.ClearScreen(cubeSet);
+            cubePainter.PaintAllImage(cubeSet, "go");
             cubePainter.Commit(cubeSet);
             listenForEvents();
 

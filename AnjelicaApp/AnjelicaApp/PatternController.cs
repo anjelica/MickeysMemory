@@ -41,10 +41,7 @@ namespace AnjelicaApp
             }
             acts.Add(new Actions(actions[actionIndex], actionCube));
             System.Threading.Thread.Sleep(1000);
-            foreach (Cube cube in cubeSet)
-            {
-                cubePainter.ClearScreen(cube, Color.White);
-            }
+            cubePainter.PaintAllImage(cubeSet, "watch");
             cubePainter.Commit(cubeSet);
             System.Threading.Thread.Sleep(1000);
             Paint();
@@ -88,12 +85,7 @@ namespace AnjelicaApp
                 System.Threading.Thread.Sleep(1000);
             }
 
-            foreach (Cube cube in cubeSet)
-            {
-                cubePainter.ClearScreen(cube, Color.White);
-            }
-            cubePainter.Commit(cubeSet);
-            System.Threading.Thread.Sleep(1000);
+
             sm.QueueTransition("patternToGame");
             sm.Tick(1);
         }
