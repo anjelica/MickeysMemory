@@ -102,6 +102,7 @@ namespace AnjelicaApp
             cube.Paint();
         }
 
+
         public void DrawColoredCircle(Cube cube)
         {
 
@@ -295,5 +296,6 @@ namespace AnjelicaApp
             cube.FillRect(color, 85, 96, 6, 2);
 
         }
+
 	}
 }

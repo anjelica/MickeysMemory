@@ -73,7 +73,11 @@ namespace AnjelicaApp
                 else
                 {
                     Log.Debug("you did: {0}", action);
-                    cubePainter.PaintAction(cube, action);
+                    //cubePainter.PaintAction(cube, action);
+                    cubePainter.PaintFullImage(cube, action);
+                    System.Threading.Thread.Sleep(800);
+                    cube.Paint();
+     
                 }
             }
             cubePainter.Commit(cubeSet);

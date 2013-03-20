@@ -1,3 +1,6 @@
+click
+flip
 happy
 lazy
 omg
+shake
